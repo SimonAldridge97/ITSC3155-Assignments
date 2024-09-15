@@ -33,6 +33,7 @@ resources = {
     "cheese": 24,  ## ounces
 }
 
+"""Added a dictionary to hold the currency"""
 currency = {
     "largeBills": 0,
     "halfBills": 0,
@@ -125,12 +126,13 @@ while not exit:
         #print("Sufficient resources!")
         print(f"One {size} sandwich coming right up!\n")
         
-        sandwichMachine5000.make_sandwich(size, recipes[size]["ingredients"])
+        
 
         print("In the meantime, let's get the payment over with! You can do so in dollars, half dollars, quarters, and nickels.")
         total_paid = sandwichMachine5000.process_coins()
         
         if sandwichMachine5000.transaction_result(total_paid, recipes[size]["cost"]):
+            sandwichMachine5000.make_sandwich(size, recipes[size]["ingredients"])
             print("Congratulations, here's your sandwich!")
     else:
         print("Unable to complete the order due to insufficient resources.")
