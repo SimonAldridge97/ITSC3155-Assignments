@@ -134,10 +134,11 @@ while not exit:
         
 
         print("In the meantime, let's get the payment over with! You can do so in dollars, half dollars, quarters, and nickels.")
+        print(f"Your total is {recipes[size]["cost"]}")
         total_paid = sandwichMachine5000.process_coins()
         
         if sandwichMachine5000.transaction_result(total_paid, recipes[size]["cost"]):
             sandwichMachine5000.make_sandwich(size, recipes[size]["ingredients"])
             print("Thanks for choosing sandwichMachine5000, here's your sandwich!\n")
     else:
-        print("Unable to complete the order due to insufficient resources.")
+        print("Unable to complete the order due to insufficient resources.\n")
