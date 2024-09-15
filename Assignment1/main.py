@@ -108,9 +108,10 @@ class SandwichMachine:
 
 sandwichMachine5000 = SandwichMachine(resources)
 
+print("\nHello! Welcome to the sandwichMachine5000 virtual sandwich maker.")
 exit = False
 while not exit:
-    print("\nHello! Welcome to the sandwichMachine5000 virtual sandwich maker.")
+    
     print("Current resources: ")
     for key, value in resources.items():
         print(f"{key} : {value}")
@@ -137,6 +138,6 @@ while not exit:
         
         if sandwichMachine5000.transaction_result(total_paid, recipes[size]["cost"]):
             sandwichMachine5000.make_sandwich(size, recipes[size]["ingredients"])
-            print("Thanks for choosing sandwichMachine5000, here's your sandwich!")
+            print("Thanks for choosing sandwichMachine5000, here's your sandwich!\n")
     else:
         print("Unable to complete the order due to insufficient resources.")
