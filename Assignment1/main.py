@@ -53,8 +53,11 @@ class SandwichMachine:
     #@return: boolean
     def check_resources(self, ingredients):
         """Returns True when order can be made, False if ingredients are insufficient."""
-        for key in ingredients:
-            print(key)
+        for key, amount in ingredients.items():
+            if self.machine_resources.get(key, 0) < amount:
+                print(f"Sorry, not enough {key}!")
+                return False
+        return True
 
     #return: float
     def process_coins(self):
@@ -70,28 +73,28 @@ class SandwichMachine:
             else:
                 currency[key] = count * .5
             totalPaid += currency[key]
-        print(totalPaid)
+        return totalPaid
 
     #param: float, float
     #return: boolean
     def transaction_result(self, coins, cost):
         """Return True when the payment is accepted, or False if money is insufficient.
            Hint: use the output of process_coins() function for cost input"""
+        if coins >= cost:
+            if coins > cost:
+                change = coins - cost
+                print(f"Here is ${change:.2f} in change.")
+            return True
+        else:
+            print("Sorry, that's not enough money. Money refunded.")
+            return False
         
     #@param: string, dictionary
     def make_sandwich(self, sandwich_size, order_ingredients):
         """Deduct the required ingredients from the resources.
            Hint: no output"""
-        if sandwich_size in recipes:
-            recipe = recipes[sandwich_size]
-        else:
-            print("Sorry, we do not offer this sandwich size.\n")     
         for ingredient, amount in order_ingredients.items():
-            if ingredient in resources:
-                if resources[ingredient] >= amount:
-                    resources[ingredient] -= amount
-                else:
-                    print("Not enough ingredients.\n")
+            self.machine_resources[ingredient] -= amount
             
                 
 
@@ -99,17 +102,35 @@ class SandwichMachine:
 ### Make an instance of SandwichMachine class and write the rest of the codes ###
 
 sandwichMachine5000 = SandwichMachine(resources)
-sandwichMachine5000.check_resources(resources)
 
+exit = False
+while not exit:
+    print("\nHello! Welcome to the sandwichMachine5000 virtual sandwich maker.")
+    print("Current resources: ")
+    for key, value in resources.items():
+        print(f"{key} : {value}")
+    size = input("To start, tell us what size sandwich you would like today. Or, press 'z' to exit.\n").lower()
 
-print("\nHello! Welcome to the sandwichMachine5000 virtual sandwich maker.")
-size = input("To start, tell us what size sandwich you would like today.\n").lower()
-print(recipes[size])
-print(f"One {size} sandwich coming right up!\n")
-sandwichMachine5000.make_sandwich(size, recipes)
+    if size == "z":
+        print("Powering off!")
+        exit = True
+        continue  
 
+    if size not in recipes:
+        print("Invalid size. Please choose 'small', 'medium', or 'large'.")
+        continue  
 
-print("In the mean time, let's get the payment over with! You can do so in dollars, half dollars, quarters, and nickels.")
-sandwichMachine5000.process_coins()
+    #print("Checking resources...\n")
+    if sandwichMachine5000.check_resources(recipes[size]["ingredients"]):
+        #print("Sufficient resources!")
+        print(f"One {size} sandwich coming right up!\n")
+        
+        sandwichMachine5000.make_sandwich(size, recipes[size]["ingredients"])
 
-
+        print("In the meantime, let's get the payment over with! You can do so in dollars, half dollars, quarters, and nickels.")
+        total_paid = sandwichMachine5000.process_coins()
+        
+        if sandwichMachine5000.transaction_result(total_paid, recipes[size]["cost"]):
+            print("Congratulations, here's your sandwich!")
+    else:
+        print("Unable to complete the order due to insufficient resources.")
