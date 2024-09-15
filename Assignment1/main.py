@@ -33,7 +33,7 @@ resources = {
     "cheese": 24,  ## ounces
 }
 
-"""Added a dictionary to hold the currency"""
+#added a dictionary to hold currency
 currency = {
     "largeBills": 0,
     "halfBills": 0,
@@ -50,6 +50,7 @@ class SandwichMachine:
            Hint: bind input variable to self variable"""
         self.machine_resources = machine_resources
 
+    #check the resource dict and verify that theres enough of each
     #@param: dictionary(resources)
     #@return: boolean
     def check_resources(self, ingredients):
@@ -60,6 +61,7 @@ class SandwichMachine:
                 return False
         return True
 
+    #method to take integers and turn it into the appropriate denomination
     #return: float
     def process_coins(self):
         totalPaid = 0
@@ -76,6 +78,7 @@ class SandwichMachine:
             totalPaid += currency[key]
         return totalPaid
 
+    #method that checks the processed amount from the method above and checks it against the cost
     #param: float, float
     #return: boolean
     def transaction_result(self, coins, cost):
@@ -90,6 +93,7 @@ class SandwichMachine:
             print("Sorry, that's not enough money. Money refunded.")
             return False
         
+    #make the sandiwch and deduct the resources from the resource dictionary
     #@param: string, dictionary
     def make_sandwich(self, sandwich_size, order_ingredients):
         """Deduct the required ingredients from the resources.
@@ -133,6 +137,6 @@ while not exit:
         
         if sandwichMachine5000.transaction_result(total_paid, recipes[size]["cost"]):
             sandwichMachine5000.make_sandwich(size, recipes[size]["ingredients"])
-            print("Congratulations, here's your sandwich!")
+            print("Thanks for choosing sandwichMachine5000, here's your sandwich!")
     else:
         print("Unable to complete the order due to insufficient resources.")
